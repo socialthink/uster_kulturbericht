@@ -2,10 +2,9 @@
 title: "Kulturförderung der Stadt Uster"
 output: 
   flexdashboard::flex_dashboard:
-    orientation: rows
+
     vertical_layout: fill
     theme: journal
-    source_code: https://github.com/socialthink/uster_kulturbericht/blob/master/kulturbericht.Rmd
     runtime: shiny
 ---
 
@@ -24,7 +23,7 @@ ubersichtdaten <- daten
 ```
 
 
-Column {.sidebar}
+Einleitung {.sidebar}
 -----------------------------------------------------------------------
 
 <b>Hier findest du eine Liste sowie Auswertungen zu den Kulturförderbeiträgeder Stadt Uster (seit 2018). Bitte beachte, dass es nach dem Förderentscheid einige Wochen dauern kann, bis die Daten aktualisiert werden.</b>
@@ -36,6 +35,7 @@ auswahlbereich <- as.list(c("ALLE BEREICHE",names(table(daten$Foerderbereich))))
 auswahljahr<- as.list(c("ALLE JAHRE",names(table(format(as.Date(daten$DatumEntscheid), "%Y")))))
 
 auswahlfoerderart<- as.list(c("ALLE FOERDERARTEN",names(table(daten$Foerderart))))
+
 
 selectInput("plot_bereich",  label = "Förderbereich:", 
                              choices = auswahlbereich, selected = 1)
@@ -55,13 +55,14 @@ Die Auswertung basiert auf [offenen Daten der Stadt Uster](https://opendata.swis
 <b>Auswertung</b><br>
 Die [Auswertung](https://github.com/socialthink/uster_kulturbericht) wurde von [Andreas Wyss](https://github.com/socialthink/) auf Grundlage von R entwickelt und steht unter einer [MIT Lizenz](https://github.com/socialthink/uster_kulturbericht/blob/master/LICENSE) zur Verfügung.
 
+
+
 Row 
 -----------------------------------------------------------------------
 
-### 
+### {.no-mobile}
 
 ```{r}
-
 
 renderPlot({
   
@@ -81,16 +82,22 @@ ubersichtdaten4 <- ubersichtdaten3
 ubersichtdaten4 <- ubersichtdaten3 %>% filter(Foerderart == input$plot_foerderart)
 } 
   
+  
 
 ## Jahresbeiträge Summe berechnen
     
+if(dim(ubersichtdaten4)[1]==0){
+summe <- 0
+anzahljahre <- 0
+startjahr <- "keine Förderbeiträge\nmit dieser Auswahl"
+} else {
 ubersichtdaten4$DatumEntscheid <- as.Date(ubersichtdaten4$DatumEntscheid)
 anzahljahre <- as.numeric(format(max(as.Date(ubersichtdaten4$DatumEntscheid)), format="%Y")) - as.numeric(format(min(as.Date(ubersichtdaten4$DatumEntscheid)), format="%Y"))
 startjahr <- as.numeric(format(min(as.Date(ubersichtdaten4$DatumEntscheid)), format="%Y"))
 wert <- ubersichtdaten4 %>% filter(DatumEntscheid >= as.Date(paste0(startjahr,"-01-01")) & DatumEntscheid <= as.Date(paste0(startjahr,"-12-31")))
 summe <- sum(wert$FoerderbeitragCHF)
 jahre <- startjahr
-
+}
 
 if (anzahljahre==0) {
 jahre <- startjahr
@@ -103,39 +110,20 @@ for(i in 1:anzahljahre){
 }
 }
 
-## maximale Summe berechnen für y-Axis
-ubersichtdaten$DatumEntscheid <- as.Date(ubersichtdaten$DatumEntscheid)
-anzahljahre2 <- as.numeric(format(max(as.Date(ubersichtdaten$DatumEntscheid)), format="%Y")) - as.numeric(format(min(as.Date(ubersichtdaten$DatumEntscheid)), format="%Y"))
-startjahr2 <- as.numeric(format(min(as.Date(ubersichtdaten$DatumEntscheid)), format="%Y"))
-wert2 <- ubersichtdaten %>% filter(DatumEntscheid >= as.Date(paste0(startjahr2,"-01-01")) & DatumEntscheid <= as.Date(paste0(startjahr2,"-12-31")))
-summe2 <- sum(wert2$FoerderbeitragCHF)
-jahre2 <- startjahr2
-
-
-if (anzahljahre2==0) {
-jahre2 <- startjahr2
-} else {
-for(i in 1:anzahljahre2){
-  wert2 <- ubersichtdaten %>% filter(DatumEntscheid >= as.Date(paste0(startjahr2+i,"-01-01")) & DatumEntscheid <= as.Date(paste0(startjahr2+i,"-12-31")))
-  wert2 <- sum(wert2$FoerderbeitragCHF)
-  summe2 <- c(summe2,wert2)
-  jahre2 <- c(jahre2,startjahr2+i)
-}
-}
-
 
 
 ## Plot
 
-barplot(summe/1000,names.arg = jahre, ylim=c(0,max(summe2)/1000), main = "Summe pro Jahr", ylab = "Förderbeitrag pro Jahr [in 1'000 Franken]")
+barplot(summe/1000,names.arg = jahre, ylim=c(0,600), main = "Summe pro Jahr", ylab = "Förderbeitrag pro Jahr [in 1'000 Franken]")
   
 
 })
 
+
 ```
 
 
-### 
+### {.no-mobile}
 
 ```{r}
 
@@ -167,7 +155,7 @@ hist(ubersichtdaten4$FoerderbeitragCHF/1000, breaks=seq(0, max(daten$Foerderbeit
 Row 
 -----------------------------------------------------------------------
 
-### 
+### {.no-mobile}
 
 ```{r}
 selectedDataUbersicht <- reactive({

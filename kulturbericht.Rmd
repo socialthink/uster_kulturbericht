@@ -14,6 +14,7 @@ library(flexdashboard)
 library(RCurl)
 library(knitr)
 library(dplyr)
+library(shiny)
 daten <- read.csv("https://raw.githubusercontent.com/GesellschaftStadtUster/kultur_foerderbeitrage/main/daten_kulturfoerderung_uster.csv")
 
 daten <- daten %>% arrange(desc(DatumEntscheid))

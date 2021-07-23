@@ -38,7 +38,7 @@ ui <- dashboardPage(skin = "red",
       
     )
     fluidRow(
-      box(tableOutput("tab1", height = 250)),
+      box(tableOutput("tab1")),
       
       
       

@@ -1,16 +1,8 @@
-#
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
 library(shiny)
 library(RCurl)
 library(knitr)
 library(dplyr)
+library(bslib)
 
 
 daten <- read.csv("https://raw.githubusercontent.com/GesellschaftStadtUster/kultur_foerderbeitrage/main/daten_kulturfoerderung_uster.csv")
@@ -23,9 +15,9 @@ auswahlfoerderart<- as.list(c("ALLE FOERDERARTEN",names(table(daten$Foerderart))
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
-
+    theme = bslib::bs_theme(bootswatch = "united"),
     # Application title
-    titlePanel("Kulturbericht der Stadt Uster"),
+    titlePanel("Kulturförderung der Stadt Uster - ein Überblick"),
 
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
@@ -41,7 +33,7 @@ ui <- fluidPage(
 Die Auswertung basiert auf <a href=\"https://opendata.swiss/de/dataset/beitrage-der-kulturforderung-der-stadt-uster-ab-2018\" target=_blank>offenen Daten der Stadt Uster</a>. Die Daten stehen unter <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=_blank>CC BY 4.0</a> zur Verfügung.
 <br><br>
 <b>Auswertung</b><br>
-Die <a href=\"https://github.com/socialthink/uster_kulturbericht\" target=_blank>Auswertung</a> wurde von <a href=\"https://github.com/socialthink/\" target=_blank>Andreas Wyss</a> auf Grundlage von R und Shiny entwickelt und steht unter einer <a href=\"https://github.com/socialthink/uster_kulturbericht/blob/master/LICENSE\" target=_blank>MIT Lizenz</a> zur Verfügung."
+Die <a href=\"https://github.com/socialthink/uster_kulturbericht\" target=_blank>Auswertung</a> wurde von <a href=\"https://socialthink.ch/\" target=_blank>Andreas Wyss</a> auf Grundlage von <a href=\"https://de.wikipedia.org/wiki/R_(Programmiersprache)\" target=_blank>R</a> und <a href=\"https://shiny.rstudio.com/\" target=_blank>Shiny</a> entwickelt und steht unter einer <a href=\"https://github.com/socialthink/uster_kulturbericht/blob/master/LICENSE\" target=_blank>MIT Lizenz</a> zur Verfügung."
             
         )),
 
@@ -84,6 +76,7 @@ server <- function(input, output) {
         } 
         
         ubersichtdaten4$DatumEntscheid <- format(as.Date(ubersichtdaten4$DatumEntscheid), "%d.%m.%Y")
+        colnames(ubersichtdaten4) <- c("Datum","Gesuchssteller","Projekt","Förderbereich","Förderart","CHF")
         ubersichtdaten4
     })
     
@@ -104,7 +97,7 @@ server <- function(input, output) {
         } else {
             ubersichtdaten4 <- ubersichtdaten3 %>% filter(Foerderart == input$plot_foerderart)
         }
-        hist(ubersichtdaten4$FoerderbeitragCHF/1000, breaks=seq(0, max(daten$FoerderbeitragCHF)/1000, length.out = as.integer(max(daten$FoerderbeitragCHF)/5000)) ,xlim=c(0,max(daten$FoerderbeitragCHF)/1000), ylim=c(0,dim(daten)[1]) , xlab = "Förderbeiträge [in 1'000 Franken']",ylab = "Häufigkeit [Anz. Beiträge]", main = "Höhe der einzelnen Beiträge in der Kulturförderung")
+        hist(ubersichtdaten4$FoerderbeitragCHF/1000, breaks=seq(0, max(daten$FoerderbeitragCHF)/1000, length.out = as.integer(max(daten$FoerderbeitragCHF)/5000)) ,xlim=c(0,max(daten$FoerderbeitragCHF)/1000), ylim=c(0,dim(daten)[1]) , xlab = "Förderbeitrag [in 1'000 Franken']",ylab = "Häufigkeit [Anz. Beiträge]", main = "Höhe der einzelnen Beiträge in der Kulturförderung")
     })
     
     output$plot2 <- renderPlot({

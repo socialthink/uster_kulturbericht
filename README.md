@@ -4,8 +4,6 @@
 Die Auswertung basiert auf offenen Daten der Stadt Uster. Die Daten stehen unter CC BY 4.0 zur Verfügung.
 
 ## Auswertung
-Die Auswertung wurde von Andreas Wyss auf Grundlage von R und Shiny entwickelt und steht unter einer MIT Lizenz zur Verfügung:
-- https://socialthink.shinyapps.io/kulturfoerderung/
-
-
-## 
+Diese App (Auswertung der Daten der Kulturförderung) wurde von Andreas Wyss auf Grundlage von R und Shiny entwickelt und steht unter einer MIT Lizenz zur Verfügung:
+- Webapp: https://socialthink.shinyapps.io/kulturfoerderung/
+- Code: https://github.com/socialthink/uster_kulturbericht/tree/master/kulturfoerderung

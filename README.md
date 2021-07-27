@@ -1,4 +1,4 @@
-# Kulturförderung der Stadt Uster - ein Überblick
+# Shiny-App zur Kulturförderung der Stadt Uster - ein Überblick
 
 ## German
 ### Datengrundlage

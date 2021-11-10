@@ -33,7 +33,7 @@ ui <- fluidPage(
 Die Auswertung basiert auf <a href=\"https://opendata.swiss/de/dataset/beitrage-der-kulturforderung-der-stadt-uster-ab-2018\" target=_blank>offenen Daten der Stadt Uster</a>. Die Daten stehen unter <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=_blank>CC BY 4.0</a> zur Verfügung.
 <br><br>
 <b>Auswertung</b><br>
-Die <a href=\"https://github.com/socialthink/uster_kulturbericht\" target=_blank>Auswertung</a> wurde von <a href=\"https://socialthink.ch/\" target=_blank>Andreas Wyss</a> auf Grundlage von <a href=\"https://de.wikipedia.org/wiki/R_(Programmiersprache)\" target=_blank>R</a> und <a href=\"https://shiny.rstudio.com/\" target=_blank>Shiny</a> entwickelt und steht unter einer <a href=\"https://github.com/socialthink/uster_kulturbericht/blob/master/LICENSE\" target=_blank>MIT Lizenz</a> zur Verfügung."
+Die <a href=\"https://github.com/socialthink/uster_kulturbericht\" target=_blank>Auswertung</a> wurde von <a href=\"https://socialthink.ch/\" target=_blank>Andreas Wyss</a> auf Grundlage von <a href=\"https://de.wikipedia.org/wiki/R_(Programmiersprache)\" target=_blank>R</a> und <a href=\"https://shiny.rstudio.com/\" target=_blank>Shiny</a> entwickelt und steht unter einer <a href=\"https://github.com/socialthink/uster_kulturbericht/blob/master/LICENSE\" target=_blank>GNU General Public License 3</a> zur Verfügung."
             
         )),
 

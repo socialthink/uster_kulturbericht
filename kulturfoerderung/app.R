@@ -41,8 +41,8 @@ Die <a href=\"https://github.com/socialthink/uster_kulturbericht\" target=_blank
         mainPanel(
             tabsetPanel(type = "tabs",
                     tabPanel("Tabelle",tableOutput("tab1")),
-                    tabPanel("Beitrag pro Jahr",plotOutput("plot2")),
-                    tabPanel("Höhe der Beiträge",plotOutput("plot1"))
+                    tabPanel("Beitrag pro Jahr",plotOutput("plot2",height = "600px")),
+                    tabPanel("Höhe der Beiträge",plotOutput("plot1",height = "600px"))
             )
         )
     )
